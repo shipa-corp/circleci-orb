@@ -1,0 +1,32 @@
+description: >
+  Perform Canary deployment of app to shipa cluster.
+executor: default
+parameters:
+  appname:
+    default: $SHIPA_APP_NAME
+    description: Your shipa app name
+    type: string
+  token:
+    default: $SHIPA_TOKEN
+    description: Your shipa token
+    type: string
+  server:
+    default: $SHIPA_SERVER
+    description: Your shipa server URL (for example http://shipa-ci-integration.org:8080)
+    type: string
+  canary-steps:
+    default: $SHIPA_CANARY_STEPS
+    description: Canary steps
+    type: string
+  canary-interval:
+    default: $SHIPA_CANARY_INTERVAL
+    description: Canary interval
+    type: string
+  canary-step-weight:
+    default: $SHIPA_CANARY_STEP_WEIGHT
+    description: Canary step weight
+    type: string
+steps:
+  - install
+  - checkout
+  - app-deploy-canary

@@ -1,0 +1,37 @@
+description: >
+  Create app in shipa.
+parameters:
+  appname:
+    default: $SHIPA_APP_NAME
+    description: Your shipa app name
+    type: string
+  platform:
+    default: $SHIPA_APP_PLATFORM
+    description: App platform (https://learn.shipa.io/docs/platforms)
+    type: string
+  team:
+    default: $SHIPA_TEAM
+    description: Shipa team name
+    type: string
+  pool:
+    default: $SHIPA_POOL
+    description: Shipa pool name
+    type: string
+  token:
+    default: $SHIPA_TOKEN
+    description: Your shipa token
+    type: string
+  server:
+    default: $SHIPA_SERVER
+    description: Your shipa server URL (for example http://shipa-ci-integration.org:8080)
+    type: string
+steps:
+  - run:
+      name: Deploy app to shipa cluster
+      command: |
+        shipa-ci \
+        --server=$SHIPA_SERVER \
+        --token=$SHIPA_TOKEN \
+        app create $SHIPA_APP_NAME $SHIPA_APP_PLATFORM \
+        --team=$SHIPA_TEAM \
+        --pool=$SHIPA_POOL

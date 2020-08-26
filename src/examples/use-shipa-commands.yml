@@ -1,0 +1,21 @@
+description: >
+  Sample of utilizing shipa commands
+usage:
+  version: 2.1
+  orbs:
+    shipa: circleci/shipa@x.y
+  jobs:
+    deploy:
+      executor: shipa/default
+      steps:
+        - checkout
+        - shipa/install
+        - run:
+            command: >
+              echo "The command above installs shipa-ci, the command below deploys.
+              What you do inbetween is up to you!"
+        - shipa/app-deploy
+  workflows:
+    shipa_deploy:
+      jobs:
+        - deploy
