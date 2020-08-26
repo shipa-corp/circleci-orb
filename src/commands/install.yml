@@ -1,0 +1,12 @@
+description: >
+  Installs shipa-ci tool. Will be skipped if the shipa-ci is already
+  installed in the system.
+steps:
+  - run:
+      name: Install shipa-ci (if not installed)
+      command: |
+        if [[ $(command -v shipa-ci) == "" ]]; then
+          pip install shipa-ci
+        else
+          echo "shipa-ci is already installed."
+        fi

@@ -1,0 +1,27 @@
+description: >
+  Deploys app to shipa cluster.
+parameters:
+  appname:
+    default: $SHIPA_APP_NAME
+    description: Your shipa app name
+    type: string
+  username:
+    default: $SHIPA_USERNAME
+    description: Your shipa username
+    type: string
+  password:
+    default: $SHIPA_PASSWORD
+    description: Your shipa password
+    type: string
+  server:
+    default: $SHIPA_SERVER
+    description: Your shipa server URL (for example http://shipa-ci-integration.org:8080)
+    type: string
+steps:
+  - run:
+      name: Deploy app to shipa cluster
+      command: |
+        shipa-ci app deploy --app=$SHIPA_APP_NAME \
+        --server=$SHIPA_SERVER \
+        --email=$SHIPA_USERNAME \
+        --password=$SHIPA_PASSWORD
