@@ -4,9 +4,4 @@ description: >
 steps:
   - run:
       name: Install shipa-ci (if not installed)
-      command: |
-        if [[ $(command -v shipa-ci) == "" ]]; then
-          pip install shipa-ci
-        else
-          echo "shipa-ci is already installed."
-        fi
+      command: pip install shipa-ci
