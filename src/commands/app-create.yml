@@ -17,13 +17,9 @@ parameters:
     default: $SHIPA_POOL
     description: Shipa pool name
     type: string
-  username:
-    default: $SHIPA_USERNAME
-    description: Your shipa username
-    type: string
-  password:
-    default: $SHIPA_PASSWORD
-    description: Your shipa password
+  token:
+    default: $SHIPA_TOKEN
+    description: Your shipa token
     type: string
   server:
     default: $SHIPA_SERVER
@@ -35,7 +31,6 @@ steps:
       command: |
         shipa-ci app create $SHIPA_APP_NAME $SHIPA_APP_PLATFORM \
         --server=$SHIPA_SERVER \
-        --email=$SHIPA_USERNAME \
-        --password=$SHIPA_PASSWORD \
+        --token=$SHIPA_TOKEN \
         --team=$SHIPA_TEAM \
         --pool=$SHIPA_POOL
