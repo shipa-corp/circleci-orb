@@ -1,0 +1,7 @@
+description: >
+  Installs shipa-ci tool. Will be skipped if the shipa-ci is already
+  installed in the system.
+steps:
+  - run:
+      name: Install shipa-ci (if not installed)
+      command: pip install shipa-ci
