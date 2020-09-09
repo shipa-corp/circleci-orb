@@ -17,21 +17,41 @@ parameters:
     default: $SHIPA_POOL
     description: Shipa pool name
     type: string
-  token:
-    default: $SHIPA_TOKEN
-    description: Your shipa token
+  user:
+    default: $SHIPA_USER
+    description: Your shipa user (email)
+    type: string
+  password:
+    default: $SHIPA_PASSWORD
+    description: Your shipa password
     type: string
   server:
     default: $SHIPA_SERVER
     description: Your shipa server URL (for example http://shipa-ci-integration.org:8080)
     type: string
+  ca:
+    default: $(echo $SHIPA_CA | base64 -d)
+    description: Your shipa CA certificate (base64 encoded)
+    type: string
 steps:
   - run:
       name: Deploy app to shipa cluster
       command: |
-        shipa-ci \
-        --server=$SHIPA_SERVER \
-        --token=$SHIPA_TOKEN \
-        app create $SHIPA_APP_NAME $SHIPA_APP_PLATFORM \
-        --team=$SHIPA_TEAM \
-        --pool=$SHIPA_POOL
+        if [[ << parameters.ca >> == "" ]]; then
+          shipa-ci \
+          --server=<< parameters.server >> \
+          --email=<< parameters.user >> \
+          --password=<< parameters.password >> \
+          app create << parameters.appname >> << parameters.platform >> \
+          --team=<< parameters.team >> \
+          --pool=<< parameters.pool >>
+        else
+          shipa-ci \
+          --server=<< parameters.server >> \
+          --email=<< parameters.user >> \
+          --password=<< parameters.password >> \
+          --ca="<< parameters.ca >>" \
+          app create << parameters.appname >> << parameters.platform >> \
+          --team=<< parameters.team >> \
+          --pool=<< parameters.pool >>
+        fi
