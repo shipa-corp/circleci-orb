@@ -19,11 +19,11 @@ parameters:
     description: Your shipa server URL (for example http://shipa-ci-integration.org:8080)
     type: env_var_name
   ca:
-    default: SHIPA_CA 
+    default: SHIPA_CA
     description: Your shipa CA certificate (base64 encoded)
     type: env_var_name
 steps:
   - install
   - checkout
   - app-deploy
-
+  
