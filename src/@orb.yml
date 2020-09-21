@@ -1,7 +1,7 @@
 version: 2.1
 
 description: >
-  Commands that perform Shipa tasks including deploys, canary deploys, application creation and Shipa command line tool installation. 
+  Commands that perform Shipa tasks including deploys, canary deploys, application creation and Shipa command line tool installation.
   # Allow deploy apps to shipa clusters
 
 display:
