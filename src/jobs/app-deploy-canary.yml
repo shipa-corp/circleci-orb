@@ -3,37 +3,37 @@ description: >
 executor: default
 parameters:
   appname:
-    default: $SHIPA_APP_NAME
+    default: SHIPA_APP_NAME
     description: Your shipa app name
-    type: string
+    type: env_var_name
   user:
-    default: $SHIPA_USER
+    default: SHIPA_USER
     description: Your shipa user (email)
-    type: string
+    type: env_var_name
   password:
-    default: $SHIPA_PASSWORD
+    default: SHIPA_PASSWORD
     description: Your shipa password
-    type: string
+    type: env_var_name
   server:
-    default: $SHIPA_SERVER
+    default: SHIPA_SERVER
     description: Your shipa server URL (for example http://shipa-ci-integration.org:8080)
-    type: string
+    type: env_var_name
   ca:
-    default: $(echo $SHIPA_CA | base64 -d)
+    default: SHIPA_CA
     description: Your shipa CA certificate (base64 encoded)
-    type: string
+    type: env_var_name
   canary-steps:
-    default: $SHIPA_CANARY_STEPS
+    default: SHIPA_CANARY_STEPS
     description: Canary steps
-    type: string
+    type: env_var_name
   canary-interval:
-    default: $SHIPA_CANARY_INTERVAL
+    default: SHIPA_CANARY_INTERVAL
     description: Canary interval
-    type: string
+    type: env_var_name
   canary-step-weight:
-    default: $SHIPA_CANARY_STEP_WEIGHT
+    default: SHIPA_CANARY_STEP_WEIGHT
     description: Canary step weight
-    type: string
+    type: env_var_name
 steps:
   - install
   - checkout

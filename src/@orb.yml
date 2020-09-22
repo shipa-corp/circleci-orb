@@ -1,5 +1,9 @@
 version: 2.1
 
 description: >
-  Shipa CI integration
+  Commands that perform Shipa tasks including deploys, canary deploys, application creation and Shipa command line tool installation.
   # Allow deploy apps to shipa clusters
+
+display:
+  source_url: https://github.com/shipa-corp/circleci-orb
+  home_url: https://www.shipa.io
