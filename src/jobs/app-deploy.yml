@@ -1,26 +1,41 @@
+---
 description: >
   Deploy an app to shipa cluster
 executor: default
 parameters:
   appname:
     default: SHIPA_APP_NAME
-    description: Your shipa app name
+    description: >
+      An environment variable referencing your Shipa app name
+
     type: env_var_name
   user:
     default: SHIPA_USER
-    description: Your shipa user (email)
+    description: >
+      An environment variable refererncing your Shipa user (email)
+
     type: env_var_name
   password:
     default: SHIPA_PASSWORD
-    description: Your shipa password
+    description: >
+      An environment variable referencing your password, for example:
+
+      export SHIPA_PASSWORD=supersecret
+
     type: env_var_name
   server:
     default: SHIPA_SERVER
-    description: Your shipa server URL (for example http://shipa-ci-integration.org:8080)
+    description: >
+      An environment variable referencing your shipa server
+      URL for example http://shipa-ci-integration.org:8080
+
     type: env_var_name
   ca:
     default: SHIPA_CA
-    description: Your shipa CA certificate (base64 encoded)
+    description: >
+      An environment variable referencing
+      your base 64 encoded Shipa CA certificate
+
     type: env_var_name
 steps:
   - install
