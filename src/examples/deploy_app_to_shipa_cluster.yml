@@ -1,6 +1,6 @@
 description: >
-  Sample of utilizing shipa commands
-usage:
+  Deploy an application to a Shipa cluster. 
+usage: 
   version: 2.1
   orbs:
     shipa: circleci/shipa@x.y
@@ -13,7 +13,7 @@ usage:
         - run:
             command: >
               echo "The command above installs shipa-ci, the command below deploys.
-              What you do inbetween is up to you!"
+              What you do in between is up to you!"
         - shipa/app-deploy
   workflows:
     shipa_deploy:
