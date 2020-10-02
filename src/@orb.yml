@@ -1,10 +1,11 @@
+---
 version: 2.1
 
 description: >
   Install and deploy your applications on Kubernetes with minimal infrastructure
   overhead. With Shipa's integration across workflows, developers can deploy
   and manage applications on Kubernetes without the need to create or manage
-  objects and YAML files 
+  objects and YAML files.
 
 display:
   source_url: https://github.com/shipa-corp/circleci-orb
