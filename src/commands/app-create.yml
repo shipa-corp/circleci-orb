@@ -14,7 +14,7 @@ parameters:
     description: Shipa team name
     type: env_var_name
   pool:
-    default: SHIPA_POOL
+    default: SHIPA_FRAMEWORK
     description: Shipa pool name
     type: env_var_name
   user:
