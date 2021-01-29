@@ -15,7 +15,7 @@ parameters:
     default: false
   dev-orb-version:
     type: string
-    default: "dev:alpha"
+    default: "1.0.1"
 
 jobs:
   # This job is an example of an integration testing job.
