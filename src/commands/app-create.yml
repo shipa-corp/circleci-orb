@@ -15,7 +15,7 @@ parameters:
     type: env_var_name
   pool:
     default: SHIPA_FRAMEWORK
-    description: Shipa pool name
+    description: Shipa framework name
     type: env_var_name
   user:
     default: SHIPA_USER
