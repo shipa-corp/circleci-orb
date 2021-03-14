@@ -37,4 +37,7 @@ parameters:
 steps:
   - install
   - checkout
-  - app-deploy-canary
+  - app-deploy-canary:
+      appname: << parameters.appname >>
+      user: << parameters.user >>
+      server: << parameters.server >>

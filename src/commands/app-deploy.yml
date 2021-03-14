@@ -1,43 +1,29 @@
-description: >
+description:
   Deploys app to shipa cluster.
 parameters:
+  source-directory:
+    default: .
+    type: string
+    description: directory containing source code
   appname:
-    default: SHIPA_APP_NAME
     description: Your shipa app name
-    type: env_var_name
+    type: string
   user:
-    default: SHIPA_USER
     description: Your shipa user (email)
-    type: env_var_name
-  password:
-    default: SHIPA_PASSWORD
-    description: Your shipa password
-    type: env_var_name
+    type: string
   server:
-    default: SHIPA_SERVER
     description: Your shipa server URL (for example http://shipa-ci-integration.org:8080)
-    type: env_var_name
-  ca:
-    default: SHIPA_CA
-    description: Your shipa CA certificate (base64 encoded)
-    type: env_var_name
+    type: string
+  insecure:
+    description: Set to true if you do not want to use a cert
+    type: boolean
+    default: false
 steps:
   - run:
+      environment:
+        SHIPA_SOURCE_DIRECTORY: << parameters.source-directory >>
+        SHIPA_APP_NAME: << parameters.appname >>
+        SHIPA_USER: << parameters.user >>
+        SHIPA_SERVER: << parameters.server >>
       name: Deploy app to shipa cluster
-      command: |
-        if [[ ${<< parameters.ca >>} == "" ]]; then
-          shipa-ci \
-          --server=${<< parameters.server >>} \
-          --email=${<< parameters.user >>} \
-          --password=${<< parameters.password >>} \
-          --insecure app deploy \
-          --app=${<< parameters.appname >>}
-        else
-          shipa-ci \
-          --server=${<< parameters.server >>} \
-          --email=${<< parameters.user >>} \
-          --password=${<< parameters.password >>} \
-          --ca=$(echo "${<< parameters.ca >>}" | base64 -d) \
-          app deploy \
-          --app=${<< parameters.appname >>}
-        fi
+      command: <<include(scripts/app-deploy.sh)>>

@@ -2,56 +2,32 @@ description: >
   Create app in shipa.
 parameters:
   appname:
-    default: SHIPA_APP_NAME
-    description: Your shipa app name
-    type: env_var_name
+    description: Your shipa app name (Required)
+    type: string
   platform:
-    default: SHIPA_APP_PLATFORM
-    description: App platform (https://learn.shipa.io/docs/platforms)
-    type: env_var_name
+    description: App platform (https://learn.shipa.io/docs/platforms). The platform must be installed already.
+    type: string
   team:
-    default: SHIPA_TEAM
-    description: Shipa team name
-    type: env_var_name
-  pool:
-    default: SHIPA_FRAMEWORK
-    description: Shipa framework name
-    type: env_var_name
+    description: Shipa team name (Required)
+    type: string
+  framework:
+    description: Shipa framework name (Required)
+    type: string
   user:
-    default: SHIPA_USER
-    description: Your shipa user (email)
-    type: env_var_name
-  password:
-    default: SHIPA_PASSWORD
-    description: Your shipa password
-    type: env_var_name
+    description: Your shipa user (email) (Required)
+    type: string
   server:
-    default: SHIPA_SERVER
-    description: Your shipa server URL (for example http://shipa-ci-integration.org:8080)
-    type: env_var_name
-  ca:
-    default: SHIPA_CA
-    description: Your shipa CA certificate (base64 encoded)
-    type: env_var_name
+    description: Your shipa server URL (for example http://shipa-ci-integration.org:8080) (Required)
+    type: string
+
 steps:
   - run:
       name: Deploy app to shipa cluster
-      command: |
-        if [[ ${<< parameters.ca >>} == "" ]]; then
-          shipa-ci \
-          --server=${<< parameters.server >>} \
-          --email=${<< parameters.user >>} \
-          --password=${<< parameters.password >>} \
-          app create ${<< parameters.appname >>} ${<< parameters.platform >>} \
-          --team=${<< parameters.team >>} \
-          --pool=${<< parameters.pool >>}
-        else
-          shipa-ci \
-          --server=${<< parameters.server >>} \
-          --email=${<< parameters.user >>} \
-          --password=${<< parameters.password >>} \
-          --ca=$(echo "${<< parameters.ca >>}" | base64 -d) \
-          app create ${<< parameters.appname >>} ${<< parameters.platform >>} \
-          --team=${<< parameters.team >>} \
-          --pool=${<< parameters.pool >>}
-        fi
+      command: <<include(scripts/app-create.sh)>>
+      environment:
+        SHIPA_APP_NAME: << parameters.appname >>
+        SHIPA_APP_PLATFORM: << parameters.platform >>
+        SHIPA_TEAM: << parameters.team >>
+        SHIPA_FRAMEWORK: << parameters.framework >>
+        SHIPA_USER: << parameters.user >>
+        SHIPA_SERVER: << parameters.server >>

@@ -1,13 +1,27 @@
 ---
 description: >
-  Deploy an application to a Shipa cluster.
+  Deploy an application to a Shipa cluster. You must set the following environment
+  variables in your Circle CI project settings. SHIPA_PASSWORD with your Shipa password
+  and optionally SHIPA_CA with the x509 cert for your Shipa connection. Note in the example
+  we are deploying a Go program. In this case the Go platform must be added to your shipa
+  installation i.e. shipa platform add go
 usage:
   version: 2.1
   orbs:
-    shipa: circleci/shipa@x.y
+    shipa: circleci/shipa@2.0.0
+  parameters:
+    user:
+      type: string
+      default: pat@shipa.io
+    app:
+      type: string
+      default: myapp
+    server:
+      type: string
+      default: https://myshipa.com
   jobs:
     deploy:
-      executor: shipa/default
+      executor: circleci/python:2.7-stretch
       steps:
         - checkout
         - shipa/install
@@ -16,7 +30,19 @@ usage:
               echo "The command above installs shipa-ci and
               the command below deploys.
               What you do in between is up to you!"
-        - shipa/app-deploy
+
+        - shipa/app-create:
+            appname: << parameters.app >>
+            platform: go
+            team: some-team
+            framework: some-framework
+            user: << parameters.user >>
+            server: << parameters.server >>
+        - shipa/app-deploy:
+            appname: << parameters.app >>
+            user: << parameters.user >>
+            server: << parameters.server >>
+
   workflows:
     shipa_deploy:
       jobs:
