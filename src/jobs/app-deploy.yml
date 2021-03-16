@@ -45,4 +45,7 @@ parameters:
 steps:
   - install
   - checkout
-  - app-deploy
+  - app-deploy:
+      appname: << parameters.appname >>
+      user: << parameters.user >>
+      server: << parameters.server >>

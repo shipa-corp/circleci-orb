@@ -4,4 +4,5 @@ description: >
 steps:
   - run:
       name: Install shipa-ci (if not installed)
-      command: pip install shipa-ci
+      command: |
+        pip install shipa-ci==v0.10.12

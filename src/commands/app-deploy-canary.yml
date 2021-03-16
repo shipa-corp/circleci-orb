@@ -1,61 +1,45 @@
 description: >
   Perform Canary deployment of app to shipa cluster.
 parameters:
+  source-directory:
+    default: .
+    description: Directory containing source code
+    type: string
   appname:
-    default: SHIPA_APP_NAME
-    description: Your shipa app name
-    type: env_var_name
+    description: Your shipa app name (required)
+    type: string
   user:
-    default: SHIPA_USER
-    description: Your shipa user (email)
-    type: env_var_name
-  password:
-    default: SHIPA_PASSWORD
-    description: Your shipa password
-    type: env_var_name
+    description: Your shipa user (email) (required)
+    type: string
   server:
-    default: SHIPA_SERVER
     description: Your shipa server URL (for example http://shipa-ci-integration.org:8080)
-    type: env_var_name
-  ca:
-    default: SHIPA_CA
-    description: Your shipa CA certificate (base64 encoded)
-    type: env_var_name
+    type: string
   canary-steps:
-    default: SHIPA_CANARY_STEPS
-    description: Canary steps
-    type: env_var_name
+    default: 1
+    description: The number of steps in a deployment
+    type: integer
   canary-interval:
-    default: SHIPA_CANARY_INTERVAL
-    description: Canary interval
-    type: env_var_name
+    default: 30s
+    description: >-
+      The amount of time to wait between each deployment step. Use the following suffixes
+      h (hour) m (minute) s (second). For example two hours ten minutes would be written 2h10m.
+    type: string
   canary-step-weight:
-    default: SHIPA_CANARY_STEP_WEIGHT
-    description: Canary step weight
-    type: env_var_name
+    default: 100
+    description: >-
+      A number between 1 and 100 that defines the percentage of units that will be
+      deployed for each step.
+    type: integer
+
 steps:
   - run:
+      environment:
+        SHIPA_SOURCE_DIRECTORY: << parameters.source-directory >>
+        SHIPA_APP_NAME: << parameters.appname >>
+        SHIPA_USER: << parameters.user >>
+        SHIPA_SERVER: << parameters.server >>
+        SHIPA_CANARY_STEPS: << parameters.canary-steps >>
+        SHIPA_CANARY_INTERVAL: << parameters.canary-interval >>
+        SHIPA_CANARY_STEP_WEIGHT: << parameters.canary-step-weight >>
       name: Deploy app to shipa cluster (with Canary deployment)
-      command: |
-        if [[ ${<< parameters.ca >>} == "" ]]; then
-          shipa-ci \
-          --server=${<< parameters.server >>} \
-          --email=${<< parameters.user >>} \
-          --password=${<< parameters.password >>} \
-          --insecure app deploy \
-          --app=${<< parameters.appname >>} \
-          --steps=${<< parameters.canary-steps >>} \
-          --step-interval=${<< parameters.canary-interval >>} \
-          --step-weight=${<< parameters.canary-step-weight >>}
-        else
-          shipa-ci \
-          --server=${<< parameters.server >>} \
-          --email=${<< parameters.user >>} \
-          --password=${<< parameters.password >>} \
-          --ca=$(echo "${<< parameters.ca >>}" | base64 -d) \
-          app deploy \
-          --app=${<< parameters.appname >>} \
-          --steps=${<< parameters.canary-steps >>} \
-          --step-interval=${<< parameters.canary-interval >>} \
-          --step-weight=${<< parameters.canary-step-weight >>}
-        fi
+      command: <<include(scripts/app-deploy-canary.sh)>>
